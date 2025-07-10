@@ -48,7 +48,7 @@ cd server
 npm install
 node server.js
 
-#### 2️⃣ Setup Frontend
+#### 3️⃣ Setup Frontend
 cd client
 npm install
 npm run dev
