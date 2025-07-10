@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 connectDb();
 
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = ['https://authix-one.vercel.app/']
 
 app.use(cookieParser());
 app.use(express.json());
