@@ -5,42 +5,40 @@ import { toast } from "react-toastify";
 export const Context = createContext();
 
 export const ContextProvider = (props) => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setisLoggedin] = useState();
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
 
-  const getAuthState = async() => {
+  const getAuthState = async () => {
     try {
-      const {data} = await axios.get(backendUrl + '/api/auth/is-auth');
-      if(data.success){
+      const { data } = await axios.get("/api/auth/is-auth");
+      if (data.success) {
         setisLoggedin(true);
         await getUserData();
-      }else{
+      } else {
         setisLoggedin(false);
       }
     } catch (error) {
       toast.error(error.message);
-    } finally{
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   const getUserData = async () => {
     try {
-      const {data} = await axios.get(backendUrl + '/api/user/data');
+      const { data } = await axios.get("/api/user/data");
       data.success ? setUserData(data.userData) : toast.error(data.message);
     } catch (error) {
-        toast.error(error.response?.data?.message || "Something went wrong");
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
-  }
+  };
 
   useEffect(() => {
     getAuthState();
   }, []);
 
   const contextValue = {
-    backendUrl,
     isLoggedin,
     setisLoggedin,
     userData,

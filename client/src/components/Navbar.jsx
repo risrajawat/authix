@@ -2,41 +2,40 @@ import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/Context";
-import axios from "axios";
+import axios from "../utils/axiosInstance.js";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { userData, backendUrl, setUserData, setisLoggedin } = useContext(Context);
+  const { userData, setUserData, setisLoggedin } = useContext(Context);
 
   const sendVerificationOtp = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const {data} = await axios.post(backendUrl + '/api/auth/send-verify-otp');
+      const { data } = await axios.post("/api/auth/send-verify-otp");
 
-      if(data.success){
-        navigate('/email-verify');
+      if (data.success) {
+        navigate("/email-verify");
         toast.success(data.message);
-      }else{
+      } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
     }
-  }
+  };
 
-  const logout = async() => {
+  const logout = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const {data} = await axios.post(backendUrl + '/api/auth/logout');
+      const { data } = await axios.post("/api/auth/logout");
       data.success && setisLoggedin(false);
       data.success && setUserData(false);
-      navigate('/');
-
+      navigate("/");
     } catch (error) {
-        toast.error(error.message);
+      toast.error(error.message);
     }
-  }
+  };
   return (
     <div className="w-full flex justify-between items-center p-3 sm:p-6 sm:px-24 absolute top-0">
       <img src={assets.chatauth} alt="" className="w-48 h-32 sm:w-56" />
@@ -46,11 +45,17 @@ const Navbar = () => {
           <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-10">
             <ul className="list-none m-0 p-2 bg-gray-100 text-sm text-center">
               {!userData.isAccountVerified && (
-                <li onClick={sendVerificationOtp} className="py-1 px-2 hover:bg-gray-200 cursor-pointer">
+                <li
+                  onClick={sendVerificationOtp}
+                  className="py-1 px-2 hover:bg-gray-200 cursor-pointer"
+                >
                   Verify email
                 </li>
               )}
-              <li onClick={logout} className="py-1 hover:bg-gray-200 cursor-pointer px-10">
+              <li
+                onClick={logout}
+                className="py-1 hover:bg-gray-200 cursor-pointer px-10"
+              >
                 Logout
               </li>
             </ul>

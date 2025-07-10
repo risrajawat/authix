@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const EmailVerify = () => {
-  const { backendUrl, isLoggedin, userData, getUserData } = useContext(Context);
+  const { isLoggedin, userData, getUserData } = useContext(Context);
   const navigate = useNavigate();
   const inputRefs = React.useRef([]);
 
@@ -38,10 +38,7 @@ const EmailVerify = () => {
       const otpArray = inputRefs.current.map((e) => e.value);
       const otp = otpArray.join("");
 
-      const { data } = await axios.post(
-        backendUrl + "/api/auth/verify-account",
-        { otp }
-      );
+      const { data } = await axios.post("/api/auth/verify-account", { otp });
 
       if (data.success) {
         toast.success(data.message);
