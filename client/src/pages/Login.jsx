@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/Context";
-import axios from "../utils/axiosInstance.js";
+import axiosInstance from "../utils/axiosInstance.js";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
     try {
       e.preventDefault();
       if (state === "Sign Up") {
-        const { data } = await axios.post("/api/auth/register", {
+        const { data } = await axiosInstance.post("/api/auth/register", {
           name,
           email,
           password,
@@ -33,7 +33,7 @@ const Login = () => {
           toast.error(data.message);
         }
       } else {
-        const { data } = await axios.post("/api/auth/login", {
+        const { data } = await axiosInstance.post("/api/auth/login", {
           email,
           password,
         });
@@ -46,7 +46,7 @@ const Login = () => {
         }
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+      toast.error(error.message);
     }
   };
   return (

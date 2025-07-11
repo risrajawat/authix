@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { Context } from "../context/Context";
-import axios from "../utils/axiosInstance.js";
+import axiosInstance from "../utils/axiosInstance.js";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -38,7 +38,7 @@ const EmailVerify = () => {
       const otpArray = inputRefs.current.map((e) => e.value);
       const otp = otpArray.join("");
 
-      const { data } = await axios.post("/api/auth/verify-account", { otp });
+      const { data } = await axiosInstance.post("/api/auth/verify-account", { otp });
 
       if (data.success) {
         toast.success(data.message);

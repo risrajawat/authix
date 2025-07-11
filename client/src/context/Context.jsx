@@ -1,4 +1,4 @@
-import axios from "../utils/axiosInstance.js";
+import axiosInstance from "../utils/axiosInstance.js";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -11,7 +11,7 @@ export const ContextProvider = (props) => {
 
   const getAuthState = async () => {
     try {
-      const { data } = await axios.get("/api/auth/is-auth");
+      const { data } = await axiosInstance.get("/api/auth/is-auth");
       if (data.success) {
         setisLoggedin(true);
         await getUserData();
@@ -30,7 +30,7 @@ export const ContextProvider = (props) => {
       const { data } = await axios.get("/api/user/data");
       data.success ? setUserData(data.userData) : toast.error(data.message);
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+      toast.error(error.message);
     }
   };
 

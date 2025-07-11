@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axiosInstance.js";
+import axiosInstance from "../utils/axiosInstance.js";
 import { toast } from "react-toastify";
 
 const ResetPassword = () => {
@@ -39,7 +39,7 @@ const ResetPassword = () => {
   const onSubmitEmail = async (e) => {
     try {
       e.preventDefault();
-      const { data } = await axios.post("/api/auth/send-reset-otp", { email });
+      const { data } = await axiosInstance.post("/api/auth/send-reset-otp", { email });
       if (data.success) {
         toast.success(data.message);
         setIsEmailSent(true);
@@ -61,7 +61,7 @@ const ResetPassword = () => {
   const onSubmitNewPassword = async (e) => {
     try {
       e.preventDefault();
-      const { data } = await axios.post("/api/auth/reset-password", {
+      const { data } = await axiosInstance.post("/api/auth/reset-password", {
         email,
         otp,
         newPassword,
