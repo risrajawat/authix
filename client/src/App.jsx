@@ -9,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -17,7 +16,6 @@ const App = () => {
           <Route path="/email-verify" element={<EmailVerify />} />
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 };
